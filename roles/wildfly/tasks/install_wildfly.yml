@@ -1,0 +1,39 @@
+# Download and configure Wildfly application server and scripts
+---
+- name: Register systemd service
+  stat:
+    path: /etc/systemd/system/wildfly.service
+  register: wf_systemd_service
+  changed_when: false
+
+- name: Register wildfly directory
+  stat:
+    path: /opt/wildfly-13.0.0.Final
+  register: wildfly_home
+  changed_when: false
+
+- name: Download and extract Wildfly archive
+  unarchive:
+    src: http://download.jboss.org/wildfly/13.0.0.Final/wildfly-13.0.0.Final.tar.gz
+    dest: /opt
+    remote_src: yes
+    owner: wildfly
+    group: wildfly
+  when: wildfly_home.stat.exists == false
+  become: true
+
+- name: Add wildfly systemd service
+  template:
+    src: wildfly.j2
+    dest: /etc/systemd/system/wildfly.service
+    owner: wildfly
+    group: wildfly
+    mode: 0755
+  become: true
+
+- name: Force systemd to reread configs
+  systemd: daemon_reload=yes
+  become: true
+  ignore_errors: yes
+  when: wf_systemd_service.stat.exists == false
+

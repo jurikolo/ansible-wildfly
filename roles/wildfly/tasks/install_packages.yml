@@ -1,0 +1,32 @@
+# Install mandatory and optional packages for Wildfly application server and server maintenance
+---
+- name: install Java
+  dnf:
+    name: java-11-openjdk
+    state: latest
+  become: true
+
+- name: install libselinux-python
+  dnf:
+    name: libselinux-python
+    state: latest
+  become: true
+
+- name: install git
+  dnf:
+    name: git
+    state: latest
+  become: true
+
+- name: install htop
+  dnf:
+    name: htop
+    state: latest
+  become: true
+
+# python-lxml is necessary to download artifacts from maven
+- name: install python-lxml
+  dnf:
+    name: python-lxml
+    state: latest
+  become: true

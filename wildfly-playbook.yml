@@ -1,0 +1,8 @@
+---
+- hosts: jurikolo
+
+  vars:
+    debug_opt: --debug
+
+  roles:
+  - wildfly

@@ -1,0 +1,8 @@
+---
+- name: Add wildfly user
+  user:
+    name: wildfly
+    create_home: no
+    password_lock: yes
+    shell: /bin/false
+  become: true

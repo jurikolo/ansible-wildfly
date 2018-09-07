@@ -1,0 +1,16 @@
+---
+# tasks file for wildfly
+# Install packages
+#- include_tasks: install_packages.yml
+
+# Create application user
+- include_tasks: configure_app_user.yml
+
+# Download and extract wildfly
+- include_tasks: install_wildfly.yml
+
+# Run Wildfly app server
+- name: Make sure a service is running
+  systemd:
+    state: started
+    name: wildfly

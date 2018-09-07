@@ -1,0 +1,15 @@
+[Unit]
+Description=WildFly application server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=wildfly
+Group=wildfly
+ExecStart=/opt/wildfly-13.0.0.Final/bin/standalone.sh --debug
+Restart=always
+RestartSec=20
+
+[Install]
+WantedBy=multi-user.target
